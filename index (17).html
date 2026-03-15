@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhishGuard AI – Phishing Detection Platform</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-scanline"></div>
+  <div class="hex-pattern"></div>
+
+  <!-- HEADER / NAV -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="20,2 38,11 38,29 20,38 2,29 2,11" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            <polygon points="20,8 32,14 32,26 20,32 8,26 8,14" fill="var(--accent)" opacity="0.15"/>
+            <path d="M20 13 L20 22 M20 24 L20 26" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">PhishGuard</span>
+          <span class="logo-ai">AI</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-link active" data-page="home">
+          <span class="nav-icon">◈</span> Analyzer
+        </a>
+        <a href="#" class="nav-link" data-page="simulator">
+          <span class="nav-icon">◉</span> Simulator
+        </a>
+        <a href="#" class="nav-link" data-page="about">
+          <span class="nav-icon">◎</span> About
+        </a>
+      </nav>
+      <div class="status-indicator">
+        <span class="status-dot pulse"></span>
+        <span class="status-text">AI ENGINE ONLINE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE: HOME / ANALYZER -->
+  <main id="page-home" class="page active">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          GENERATIVE AI POWERED
+        </div>
+        <h1 class="hero-title">
+          Detect Phishing<br/>
+          <span class="hero-accent">Before It Strikes</span>
+        </h1>
+        <p class="hero-sub">Advanced NLP analysis + AI explanation engine to protect you from social engineering attacks. Paste any suspicious message below.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-scans">3.2M+</div>
+          <div class="stat-label">Messages Scanned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">94.7%</div>
+          <div class="stat-label">Detection Accuracy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">12ms</div>
+          <div class="stat-label">Avg. Response Time</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analyzer Section -->
+    <section class="analyzer-section">
+      <div class="analyzer-container">
+        <div class="analyzer-header">
+          <div class="analyzer-title">
+            <span class="terminal-prompt">$</span> MESSAGE ANALYSIS TERMINAL
+          </div>
+          <div class="analyzer-controls">
+            <button class="ctrl-btn" id="btn-clear" title="Clear">✕</button>
+            <button class="ctrl-btn" id="btn-paste" title="Paste Example">⌘</button>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <textarea
+            id="message-input"
+            placeholder="Paste your suspicious email, SMS, or message here...&#10;&#10;Example: 'Dear customer, your account has been suspended. Click here immediately to verify your identity and provide your OTP to restore access.'"
+            spellcheck="false"
+          ></textarea>
+          <div class="input-counter"><span id="char-count">0</span> chars</div>
+        </div>
+        <div class="analyzer-actions">
+          <button class="btn-analyze" id="btn-analyze">
+            <span class="btn-icon">⬡</span>
+            <span class="btn-text">ANALYZE MESSAGE</span>
+            <span class="btn-loader hidden">
+              <span class="dot-loader"></span>
+            </span>
+          </button>
+          <button class="btn-secondary" id="btn-load-sample">Load Sample Phishing Email</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section (hidden by default) -->
+    <section class="results-section hidden" id="results-section">
+      <div class="results-grid">
+        <!-- Risk Score Panel -->
+        <div class="panel risk-panel" id="risk-panel">
+          <div class="panel-header">
+            <span class="panel-label">THREAT ASSESSMENT</span>
+            <div class="risk-badge" id="risk-badge">—</div>
+          </div>
+          <div class="risk-score-display">
+            <div class="risk-circle-wrap">
+              <svg class="risk-svg" viewBox="0 0 120 120">
+                <circle class="risk-track" cx="60" cy="60" r="52" />
+                <circle class="risk-fill" id="risk-circle" cx="60" cy="60" r="52"
+                  stroke-dasharray="326.7"
+                  stroke-dashoffset="326.7"
+                  transform="rotate(-90 60 60)" />
+              </svg>
+              <div class="risk-number">
+                <span id="risk-percent">0</span>
+                <span class="risk-unit">%</span>
+              </div>
+            </div>
+            <div class="risk-label-text" id="risk-label">SCANNING...</div>
+          </div>
+          <div class="indicators-list" id="indicators-list"></div>
+        </div>
+
+        <!-- Highlighted Message Panel -->
+        <div class="panel highlight-panel">
+          <div class="panel-header">
+            <span class="panel-label">THREAT INDICATORS</span>
+            <div class="legend">
+              <span class="leg-item leg-red">● High Risk</span>
+              <span class="leg-item leg-orange">● Suspicious</span>
+              <span class="leg-item leg-yellow">● Warning</span>
+            </div>
+          </div>
+          <div class="highlighted-message" id="highlighted-message"></div>
+        </div>
+
+        <!-- AI Explanation Panel -->
+        <div class="panel ai-panel">
+          <div class="panel-header">
+            <span class="panel-label">AI EXPLANATION ENGINE</span>
+            <span class="ai-badge">⚡ GPT POWERED</span>
+          </div>
+          <div class="ai-explanation" id="ai-explanation">
+            <div class="ai-loading hidden" id="ai-loading">
+              <div class="ai-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <p>Generating AI analysis...</p>
+            </div>
+            <div id="ai-content"></div>
+          </div>
+        </div>
+
+        <!-- Security Tips Panel -->
+        <div class="panel tips-panel">
+          <div class="panel-header">
+            <span class="panel-label">🛡 SECURITY AWARENESS TIPS</span>
+          </div>
+          <div class="tips-list" id="tips-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE: SIMULATOR -->
+  <main id="page-simulator" class="page hidden">
+    <section class="sim-hero">
+      <div class="sim-hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot orange"></span>
+          ATTACK SIMULATION LAB
+        </div>
+        <h1 class="hero-title">Phishing Attack<br/><span class="hero-accent orange">Simulator</span></h1>
+        <p class="hero-sub">See how attackers craft deceptive messages. Educational tool to recognize manipulation tactics before falling victim.</p>
+      </div>
+    </section>
+
+    <section class="simulator-section">
+      <div class="sim-container">
+        <div class="scenario-selector">
+          <div class="selector-header">SELECT ATTACK SCENARIO</div>
+          <div class="scenario-grid">
+            <div class="scenario-card active" data-scenario="bank">
+              <div class="scenario-icon">🏦</div>
+              <div class="scenario-name">Bank Account Verification</div>
+              <div class="scenario-desc">Financial phishing via spoofed bank alerts</div>
+            </div>
+            <div class="scenario-card" data-scenario="job">
+              <div class="scenario-icon">💼</div>
+              <div class="scenario-name">Fake Job Offer</div>
+              <div class="scenario-desc">Employment scam targeting job seekers</div>
+            </div>
+            <div class="scenario-card" data-scenario="otp">
+              <div class="scenario-icon">🔐</div>
+              <div class="scenario-name">OTP Theft Attack</div>
+              <div class="scenario-desc">Social engineering to steal one-time passwords</div>
+            </div>
+            <div class="scenario-card" data-scenario="parcel">
+              <div class="scenario-icon">📦</div>
+              <div class="scenario-name">Parcel Delivery Scam</div>
+              <div class="scenario-desc">Fake courier notifications with malicious links</div>
+            </div>
+            <div class="scenario-card" data-scenario="prize">
+              <div class="scenario-icon">🏆</div>
+              <div class="scenario-name">Prize / Lottery Win</div>
+              <div class="scenario-desc">Too-good-to-be-true reward phishing</div>
+            </div>
+            <div class="scenario-card" data-scenario="gov">
+              <div class="scenario-icon">🏛️</div>
+              <div class="scenario-name">Government Impersonation</div>
+              <div class="scenario-desc">Fake tax authority or legal threat scams</div>
+            </div>
+          </div>
+          <button class="btn-analyze sim-btn" id="btn-simulate">
+            <span class="btn-icon">⚠</span>
+            <span class="btn-text">GENERATE SIMULATION</span>
+            <span class="btn-loader hidden"><span class="dot-loader"></span></span>
+          </button>
+        </div>
+
+        <div class="sim-output hidden" id="sim-output">
+          <div class="sim-output-header">
+            <span class="warning-tape">⚠ SIMULATED PHISHING EXAMPLE — FOR EDUCATIONAL USE ONLY ⚠</span>
+          </div>
+          <div class="sim-results-grid">
+            <div class="panel sim-message-panel">
+              <div class="panel-header">
+                <span class="panel-label">SIMULATED ATTACK MESSAGE</span>
+                <span class="sim-scenario-tag" id="sim-scenario-tag"></span>
+              </div>
+              <div class="sim-message-box" id="sim-message-box"></div>
+            </div>
+            <div class="panel sim-tactics-panel">
+              <div class="panel-header">
+                <span class="panel-label">⚔ MANIPULATION TACTICS USED</span>
+              </div>
+              <div class="tactics-list" id="tactics-list"></div>
+            </div>
+          </div>
+          <div class="panel sim-breakdown-panel">
+            <div class="panel-header">
+              <span class="panel-label">🤖 AI BREAKDOWN — HOW THIS ATTACK WORKS</span>
+            </div>
+            <div class="sim-ai-content" id="sim-ai-content"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE: ABOUT -->
+  <main id="page-about" class="page hidden">
+    <section class="about-section">
+      <div class="about-container">
+        <div class="hero-badge" style="margin-bottom:1.5rem">
+          <span class="badge-dot"></span> PROJECT OVERVIEW
+        </div>
+        <h1 class="hero-title">About <span class="hero-accent">PhishGuard AI</span></h1>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🎯</div>
+            <h3>The Problem</h3>
+            <p>Phishing attacks cost organizations billions annually. Social engineering exploits human psychology, making technical defenses insufficient. Users need awareness training, not just filters.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">🧠</div>
+            <h3>How AI Is Used</h3>
+            <p>Rule-based NLP detects linguistic patterns, urgency triggers, and suspicious domains. Claude AI generates personalized explanations and educational simulations that adapt to each message context.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">🛡</div>
+            <h3>Detection Engine</h3>
+            <p>Multi-layer analysis: keyword scoring, domain validation, impersonation pattern matching, sentiment analysis for urgency/fear tactics, and link structure inspection.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">⚡</div>
+            <h3>Tech Stack</h3>
+            <p>Frontend: HTML5, CSS3, Vanilla JS with cybersecurity dashboard UI. Backend: Python Flask API. AI: Claude (claude-sonnet-4-20250514) for natural language explanation and simulation generation.</p>
+          </div>
+        </div>
+        <div class="how-to-run">
+          <div class="panel-header"><span class="panel-label">HOW TO RUN LOCALLY</span></div>
+          <div class="code-block">
+            <pre><code><span class="cmd-comment"># 1. Install Python dependencies</span>
+pip install flask flask-cors anthropic
+
+<span class="cmd-comment"># 2. Set your Anthropic API key</span>
+export ANTHROPIC_API_KEY="your_key_here"
+
+<span class="cmd-comment"># 3. Start the Flask backend</span>
+cd backend
+python app.py
+
+<span class="cmd-comment"># 4. Open the frontend</span>
+open frontend/index.html
+<span class="cmd-comment"># or serve it with: python -m http.server 8080</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
