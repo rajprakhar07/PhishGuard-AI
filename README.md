@@ -176,6 +176,13 @@ The rule-based engine achieves ~85-90% accuracy on common phishing patterns. The
 
 ---
 
+## 🚀 Future Improvements
+
+- Integration with phishing URL reputation APIs (PhishTank, OpenPhish)
+- Machine learning model for advanced phishing detection
+- Email header analysis (SPF, DKIM, DMARC verification)
+- Browser extension for real-time phishing protection
+
 ## 📄 License
 
 MIT License — Free for educational and research use.
