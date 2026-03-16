@@ -1,5 +1,10 @@
 # 🛡 PhishGuard AI — Generative AI Powered Phishing Detection & Awareness Platform
 
+## 🚀 Live Demo
+Try PhishGuard AI here:
+
+https://phishguard-ai.vercel.app
+
 ![PhishGuard AI](https://img.shields.io/badge/AI-Powered-00d4ff?style=flat-square) 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square)
 ![Flask](https://img.shields.io/badge/Flask-2.x-green?style=flat-square)
