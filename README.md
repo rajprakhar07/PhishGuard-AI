@@ -3,7 +3,7 @@
 ## 🚀 Live Demo
 Try PhishGuard AI here:
 
-phish-guard-ai-theta.vercel.app
+(https://phish-guard-ai-theta.vercel.app)
 
 ![PhishGuard AI](https://img.shields.io/badge/AI-Powered-00d4ff?style=flat-square) 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square)
