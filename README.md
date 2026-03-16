@@ -15,29 +15,13 @@ https://phish-guard-ai-theta.vercel.app
 
 ### Phishing Analyzer & Simulator
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/analyzer_input.png" width="300"/><br>
-      <b>Analyzer Input</b>
-    </td>
-    <td align="center">
-      <img src="screenshots/analyzer_result.png" width="300"/><br>
-      <b>Analyzer Result</b>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/simulator_fields.png" width="300"/><br>
-      <b>Simulator Fields</b>
-    </td>
-    <td align="center">
-      <img src="screenshots/simulator_generated.png" width="300"/><br>
-      <b>Simulator Generated Message</b>
-    </td>
-  </tr>
-</table>
+| Analyzer Input | Analyzer Result |
+|----------------|----------------|
+| <img src="screenshots/analyzer_input.png" width="300"/> | <img src="screenshots/analyzer_result.png" width="300"/> |
 
+| Simulator Fields | Simulator Generated Message |
+|-----------------|----------------------------|
+| <img src="screenshots/simulator_fields.png" width="300"/> | <img src="screenshots/simulator_generated.png" width="300"/> |
 ---
 ## 🎯 Project Overview
 
